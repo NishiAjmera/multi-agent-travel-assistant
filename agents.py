@@ -2,8 +2,10 @@
 from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
 from langchain_openai import ChatOpenAI
-from typing import Dict, Any
-import os
+
+from a2a_flights import flights_agent_card
+from a2a_hotels import hotels_agent_card
+from a2a.types import AgentCard
 
 # Define tools for Flights agent
 def get_flights(departure: str = "NYC", destination: str = "LAX", date: str = "2024-07-01") -> str:
@@ -80,9 +82,9 @@ class FlightsAgent:
         except Exception as e:
             return f"Error processing query: {str(e)}"
     
-    # def get_agent_card(self) -> AgentCard:
-    #     """Return the agent card for A2A protocol"""
-    #     return self.agent_card
+    def get_agent_card(self) -> AgentCard:
+        """Return the agent card for A2A protocol"""
+        return self.agent_card
 
 class HotelsAgent:
     def __init__(self, openai_api_key: str, base_url: str = None):
@@ -127,9 +129,9 @@ class HotelsAgent:
         except Exception as e:
             return f"Error processing query: {str(e)}"
     
-    # def get_agent_card(self) -> AgentCard:
-    #     """Return the agent card for A2A protocol"""
-    #     return self.agent_card
+    def get_agent_card(self) -> AgentCard:
+        """Return the agent card for A2A protocol"""
+        return self.agent_card
 
 # =============================================================================
 # COMBINED TRAVEL AGENT CARD (PUBLIC CARD)

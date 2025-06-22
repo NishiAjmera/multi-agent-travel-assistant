@@ -12,7 +12,8 @@ from a2a.task_store import InMemoryTaskStore
 
 # Import our custom components
 from agents import public_agent_card, specific_extended_agent_card
-from agent_executor import TravelAgentExecutor
+from flights_agent_executor import FlightsAgentExecutor
+# from agent_executor import TravelAgentExecutor
 
 def create_server():
     """
@@ -21,7 +22,7 @@ def create_server():
     
     # Initialize the request handler with our custom agent executor
     request_handler = DefaultRequestHandler(
-        agent_executor=TravelAgentExecutor(),
+        agent_executor=FlightsAgentExecutor(),
         task_store=InMemoryTaskStore(),
     )
 
@@ -29,7 +30,7 @@ def create_server():
     server = A2AStarletteApplication(
         agent_card=public_agent_card,
         http_handler=request_handler,
-        extended_agent_card=specific_extended_agent_card,
+        # extended_agent_card=specific_extended_agent_card,
     )
     
     return server
@@ -44,8 +45,8 @@ def main():
         print("Warning: OPENAI_API_KEY environment variable not set!")
         print("Please set your OpenAI API key: export OPENAI_API_KEY='your-key-here'")
     
-    if os.getenv("OPENAI_BASE_URL"):
-        print(f"Using enterprise OpenAI base URL: {os.getenv('OPENAI_BASE_URL')}")
+    # if os.getenv("OPENAI_BASE_URL"):
+    #     print(f"Using enterprise OpenAI base URL: {os.getenv('OPENAI_BASE_URL')}")
     
     # Create the server
     print("🚀 Starting Travel Booking Agent Server...")
