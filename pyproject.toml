@@ -1,0 +1,13 @@
+[project]
+name = "multi-agent-travel-assistant"
+version = "0.1.0"
+description = "Travel assistant app"
+dependencies = [
+    "langgraph",
+    "fastapi",
+    "uvicorn",
+    "langchain_openai",
+    "a2a-sdk"
+]
+
+[tool.uv]
