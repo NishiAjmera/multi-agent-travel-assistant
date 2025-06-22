@@ -40,14 +40,13 @@ def book_hotel(hotel_name: str, guest_name: str = "John Doe", checkin: str = "20
 # =============================================================================
 
 class FlightsAgent:
-    def __init__(self, openai_api_key: str, base_url: str = None):
+    def __init__(self, openai_api_key: str):
         self.agent_card = flights_agent_card
         
         # Initialize OpenAI model
         self.model = ChatOpenAI(
             model="gpt-4o",
             api_key=openai_api_key,
-            base_url=base_url,
             temperature=0
         )
         
@@ -70,7 +69,7 @@ class FlightsAgent:
             self.model,
             tools=[get_flights, book_flight],
             checkpointer=self.memory,
-            state_modifier=system_instruction
+            prompt=system_instruction
         )
         
     async def run(self, query: str, thread_id: str = "flights_thread") -> str:
@@ -117,7 +116,7 @@ class HotelsAgent:
             self.model,
             tools=[get_hotels, book_hotel],
             checkpointer=self.memory,
-            state_modifier=system_instruction
+            prompt=system_instruction
         )
         
     async def run(self, query: str, thread_id: str = "hotels_thread") -> str:

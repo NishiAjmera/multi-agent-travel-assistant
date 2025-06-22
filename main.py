@@ -6,12 +6,14 @@ Integrates flights and hotels agents with Google's Agent 2 Agent framework
 
 import os
 import uvicorn
-from a2a.starlette_application import A2AStarletteApplication
-from a2a.request_handler import DefaultRequestHandler
-from a2a.task_store import InMemoryTaskStore
+from dotenv import load_dotenv
+from a2a.server.apps import A2AStarletteApplication
+from a2a.server.request_handlers import DefaultRequestHandler
+from a2a.server.tasks import InMemoryTaskStore
+from a2a_flights import flights_agent_card
 
 # Import our custom components
-from agents import public_agent_card, specific_extended_agent_card
+# from agents import public_agent_card, specific_extended_agent_card
 from flights_agent_executor import FlightsAgentExecutor
 # from agent_executor import TravelAgentExecutor
 
@@ -19,7 +21,6 @@ def create_server():
     """
     Create and configure the A2A Starlette application server
     """
-    
     # Initialize the request handler with our custom agent executor
     request_handler = DefaultRequestHandler(
         agent_executor=FlightsAgentExecutor(),
@@ -28,7 +29,7 @@ def create_server():
 
     # Create the A2A Starlette application
     server = A2AStarletteApplication(
-        agent_card=public_agent_card,
+        agent_card=flights_agent_card,
         http_handler=request_handler,
         # extended_agent_card=specific_extended_agent_card,
     )
@@ -41,6 +42,8 @@ def main():
     """
     
     # Validate environment variables
+
+    load_dotenv()
     if not os.getenv("OPENAI_API_KEY"):
         print("Warning: OPENAI_API_KEY environment variable not set!")
         print("Please set your OpenAI API key: export OPENAI_API_KEY='your-key-here'")
